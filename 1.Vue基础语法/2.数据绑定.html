@@ -5,12 +5,22 @@
     <title>数据绑定</title>
     <script src="../vue.js"></script>
 </head>
+<style type="text/css">
+</style>
 <body>
 <div id="app">
-    <!--普通及時數據綁定-->
+    <!--普通及时数据绑定-->
     <h3>{{text}}</h3>
-    <!--單詞綁定-->
+    <!--单词绑定 数据只能赋值一次-->
     <h3 v-once>{{text}}</h3>
+    <!--普通方式绑定html-->
+    <div>{{rawHtml}}</div>
+    <!--使用指令方式绑定-->
+    <div v-html="rawHtml"></div>
+    <!--标签自带属性绑定-->
+    <a v-bind:href="website.path" target="_blank">{{website.name}}</a>
+    <!--缩写-->
+    <a :href="website.path" target="_blank">{{website.name}}</a>
 </div>
 </body>
 <script>
@@ -18,6 +28,11 @@
         el: '#app',
         data: {
             text: 'Hello world',
+            rawHtml: '<span style="color: chartreuse">测试html</span>',
+            website: {
+                name: 'google',
+                path: 'http://google.com'
+            }
         },
     })
 </script>
