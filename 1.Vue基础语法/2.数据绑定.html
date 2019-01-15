@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据绑定</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--普通及時數據綁定-->
+    <h3>{{text}}</h3>
+    <!--單詞綁定-->
+    <h3 v-once>{{text}}</h3>
+</div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            text: 'Hello world',
+        },
+    })
+</script>
+</html>
