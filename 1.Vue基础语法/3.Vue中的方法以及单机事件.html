@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中的方法以及单机事件</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <button @click="openAlert">按钮点击</button>
+</div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: {},
+        methods: {
+            openAlert: function () {
+                alert('gogo');
+            }
+        }
+    })
+</script>
+</html>
