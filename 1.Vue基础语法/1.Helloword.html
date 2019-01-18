@@ -8,13 +8,62 @@
 <body>
 <div id="app">
     <h3>{{text}}</h3>
+    <h3>{{text.split('').reverse().join('')}}</h3>
+
+    <h3>{{textReverse}}</h3>
+    <input v-model="text">
+
+    <button @click="test1">测试1</button>
+    <button @click="test2">测试2</button>
+
+    <hr/>
+
+    计算正方形面积<br>
+    边长：<input v-model="sqWidth"><br>
+    面积：<span>{{sqAreaFun()}}</span>
+    面积：<span>{{sqAreaFun()}}</span>
+
+    <hr/>
+
+    <input v-model="demo_watch">
+
 </div>
 </body>
 <script>
     new Vue({
         el: '#app',
         data: {
-            text: 'Hello world'
+            text: 'Hello world',
+            sqWidth:2,
+            demo_watch:'天王该帝豪'
+        },
+        computed: {
+            textReverse: function () {
+                console.log('test2');
+                return this.text.split('').reverse().join('');
+            },
+            sqArea:function () {
+                console.log('sqArea');
+                return this.sqWidth * this.sqWidth;
+            }
+        },
+        watch:{
+            demo_watch: function () {
+                console.log('demo_watch发生改变');
+            }
+        },
+        methods: {
+            test1: function () {
+                console.log('test1');
+                return this.text.split('').reverse().join('');
+            },
+            test2: function () {
+                return this.textReverse;
+            },
+            sqAreaFun:function () {
+                // console.log('sqAreafUN');
+                return this.sqWidth * this.sqWidth;
+            }
         }
     })
 </script>

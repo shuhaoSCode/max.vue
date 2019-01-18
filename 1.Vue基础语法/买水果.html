@@ -29,14 +29,13 @@
         <h2>购物车列表</h2>
         <ul>
             <li v-for="(fruit,index) in shopping_cart">
-                <div v-if="fruit.count != 0">
-                    商品名称：{{fruitList[fruit.fruitListIndex].name}}<br>
-                    商品数量：{{fruit.count}}<br>
-                    <button @click="reduceFruit(index)">放回商品列表</button>
-                </div>
+                商品名称：{{fruitList[fruit.fruitListIndex].name}}<br>
+                商品数量：{{fruit.count}}<br>
+                <button @click="reduceFruit(index)">放回商品列表</button>
             </li>
         </ul>
     </div>
+    <p>总金额：{{money}}p</p>
 </div>
 <script>
     new Vue({
@@ -51,12 +50,27 @@
             ],
             shopping_cart: [
                 {fruitListIndex: 2, count: 2},
-                {fruitListIndex: 1, count: 100}
-            ]
+                {fruitListIndex: 1, count: 1}
+            ],
+            money: 0
         },
         computed: {
-            add:function () {
+            add: function () {
                 return this.fruitList[0]
+            }
+        },
+        watch: {
+            shopping_cart: {
+                handler(newval, oldval) {
+                    let money = 0;
+                    for (let i = 0; i < this.shopping_cart.length; i++) {
+                        let fruit = this.shopping_cart[i];
+                        money += this.fruitList[fruit.fruitListIndex].price * fruit.count;
+                    }
+                    this.money = money;
+                },
+                immediate: true,
+                deep: true
             }
         },
         methods: {
@@ -72,7 +86,11 @@
                 this.shopping_cart.push(item);
             },
             reduceFruit: function (index) {
-                this.shopping_cart[index].count--;
+                if (this.shopping_cart[index].count == 1) {
+                    this.shopping_cart.splice(index, 1);
+                } else {
+                    this.shopping_cart[index].count--;
+                }
                 this.fruitList[this.shopping_cart[index].fruitListIndex].count++;
             }
         }

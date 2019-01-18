@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>啦啦</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>{{message.split('').reverse().join('')}}</p>
+    <input v-model="message">
+    <p>{{reverseMessage}}</p>
+    <p>{{reverseMessageFun()}}</p>
+</div>
+</body>
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            message: 'message',
+            ddd: ['fff']
+        },
+        computed: {
+            reverseMessage: function () {
+                return this.message.split('').reverse().join('');
+            }
+        },
+        watch: {
+            message: {
+                handler(newval, oldval) {
+                    console.log('新数据：' + newval, '' +
+                        '老数据：' + oldval);
+                },
+                immediate: true,
+            }
+        },
+        methods: {
+            reverseMessageFun: function () {
+                return this.message.split('').reverse().join('');
+            }
+        }
+    })
+</script>
+</html>

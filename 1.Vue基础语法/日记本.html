@@ -63,9 +63,12 @@
             <li class="list-item" v-for="(article,index) in article_list">
                 <p class="title">{{article.title}}</p>
                 <article class="article-content">{{article.content}}</article>
+                <span class="time">阅读数量{{article.read_num}}</span>
                 <span class="time">发布时间{{article.time}}</span>
                 <button type="button" class="btn btn-danger" @click="removeArticle(index)">删除</button>
             </li>
+            <span>总阅读量：{{read_num_all}}</span>
+            <span>总阅读量computerd：{{allreadnum}}</span>
         </ul>
     </div>
     <div style="width: 29%;">
@@ -82,11 +85,43 @@
         el: '#app',
         data: {
             article_list: [
-                {title: '小卖部**为何频繁失窃', content: '到底是孝皇扭曲，还是道德的沦丧；', time: '2018年 10月12日'},
+                {title: '小卖部**为何频繁失窃', content: '到底是孝皇扭曲，还是道德的沦丧；', time: '2018年 10月12日', read_num: 11},
+                {title: '九一零二年 一月十八号', content: '今日无事，天气晴。', time: '2018年 10月12日', read_num: 141},
             ],
             article_info: {
                 title: null,
                 content: null
+            },
+            read_num_all: 0
+        },
+        watch: {
+            article_list: {
+                handler() {
+                    let num = 0;
+                    for (let i = 0; i < this.article_list.length; i++) {
+                        num += this.article_list[i].read_num;
+                        let dd = 'd';
+                    }
+                    this.read_num_all = num;
+                },
+                immediate: true,
+
+            },
+            // article_list:function () {
+            //     let num = 0;
+            //     for (let i = 0; i < this.article_list.length; i++) {
+            //         num += this.article_list[i].read_num;
+            //     }
+            //     this.read_num_all = num;
+            // }
+        },
+        computed: {
+            allreadnum: function () {
+                let num = 0;
+                for (let i = 0; i < this.article_list.length; i++) {
+                    num += this.article_list[i].read_num;
+                }
+                return num;
             }
         },
         methods: {
@@ -98,6 +133,7 @@
                 this.article_list.push({
                     title: this.article_info.title,
                     content: this.article_info.content,
+                    read_num: Math.ceil(Math.random() * 1000),
                     time: this.getTime()
                 });
                 this.article_info.title = null;
