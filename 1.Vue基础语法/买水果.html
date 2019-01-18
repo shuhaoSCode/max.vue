@@ -54,6 +54,11 @@
                 {fruitListIndex: 1, count: 100}
             ]
         },
+        computed: {
+            add:function () {
+                return this.fruitList[0]
+            }
+        },
         methods: {
             addFruit: function (index) {
                 this.fruitList[index].count--;

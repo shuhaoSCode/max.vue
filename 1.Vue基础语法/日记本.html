@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>日记本</title>
+    <script src="../vue.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<style>
+    div {
+        width: 100%;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    p {
+        margin: 0 auto;
+    }
+
+    .btn {
+        padding: 4px 6px;
+    }
+
+    .main-container {
+        padding: 12px 0;
+        color: #333;
+        font-size: 14px;
+    }
+
+    .main-container .article-list {
+        padding: 0 20px;
+    }
+
+    .main-container .article-list .list-item {
+        margin-bottom: 24px;
+        padding: 0 12px 12px;
+        border-bottom: 1px solid #dedede;
+    }
+
+    .main-container .article-list .list-item .title {
+        color: cornflowerblue;
+        font-size: 20px;
+    }
+
+    .main-container .article-list .list-item .article-content {
+        margin-bottom: 12px;
+    }
+
+    .main-container .article-list .list-item .time {
+        color: #dedede;
+        font-size: 12px;
+    }
+</style>
+<body>
+<div id="app" class="main-container">
+    <div style="width: 70%;">
+        <ul class="article-list">
+            <li class="list-item" v-for="(article,index) in article_list">
+                <p class="title">{{article.title}}</p>
+                <article class="article-content">{{article.content}}</article>
+                <span class="time">发布时间{{article.time}}</span>
+                <button type="button" class="btn btn-danger" @click="removeArticle(index)">删除</button>
+            </li>
+        </ul>
+    </div>
+    <div style="width: 29%;">
+        <label>标题：</label>
+        <input class="form-control" v-model="article_info.title"><br>
+        <label>正文：</label>
+        <textarea class="form-control" v-model="article_info.content"></textarea><br>
+        <button type="button" class="btn btn-info" @click="addArticle">发布</button>
+    </div>
+</div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            article_list: [
+                {title: '小卖部**为何频繁失窃', content: '到底是孝皇扭曲，还是道德的沦丧；', time: '2018年 10月12日'},
+            ],
+            article_info: {
+                title: null,
+                content: null
+            }
+        },
+        methods: {
+            addArticle: function () {
+                if (this.article_info.title == null || this.article_info.content == null) {
+                    alert('参数不能为空');
+                    return;
+                }
+                this.article_list.push({
+                    title: this.article_info.title,
+                    content: this.article_info.content,
+                    time: this.getTime()
+                });
+                this.article_info.title = null;
+                this.article_info.content = null;
+            },
+            removeArticle: function (index) {
+                this.article_list.splice(index, 1);
+            },
+            getTime: function () {
+                let date = new Date();
+                return date.getFullYear() + '年 ' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
+            }
+        }
+    })
+</script>
+</html>
